@@ -1,7 +1,7 @@
 {#pragma save_compiled_source ../Compiled/lick.txt}
 import "super poly.ksp"
 on init 
-	declare notes[8] := (0,2,3,5,0, 2,-2,0)
+	declare notes[8] := (0,2,3,5,1, 2,-2,0)
 	declare timing[8] := (1000,1000,1000,1000,500, 1500,1000,2000)
 	declare timing_scale
 	declare note_down[128]

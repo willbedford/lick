@@ -1,8 +1,6 @@
-{ LICK by Will Bedford }
-{ Paste this into a multi script to add instant flavour to any notes you play)
-{ Compiled on Mon May 11 17:22:45 2020 }
+{ Compiled on Mon May 11 17:29:28 2020 }
 on init
-declare %djki0[8] := (0, 2, 3, 5, 0, 2, -2, 0)
+declare %djki0[8] := (0, 2, 3, 5, 1, 2, -2, 0)
 declare %3qnb2[8] := (1000, 1000, 1000, 1000, 500, 1500, 1000, 2000)
 declare $gwfzz
 declare %mb0d2[128]
