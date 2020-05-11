@@ -1,27 +1,36 @@
+{#pragma save_compiled_source ../Compiled/lick.txt}
 import "super poly.ksp"
-
 on init 
 	declare notes[8] := (0,2,3,5,0, 2,-2,0)
 	declare timing[8] := (1000,1000,1000,1000,500, 1500,1000,2000)
 	declare timing_scale
+	declare note_down[128]
 	super_poly(i)
 end on
 
 on midi_in
-
+	message(NI_CALLBACK_ID)
 	if MIDI_COMMAND = MIDI_COMMAND_NOTE_ON
-		timing_scale := random(20, 180)
+		timing_scale := random(30, 180)
 		ignore_midi
-		for i := 0 to num_elements(notes)
+		note_down[MIDI_BYTE_1] := 1
+		for i := 0 to num_elements(notes)-1
+
 			set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_ON, MIDI_BYTE_1 + notes[i], MIDI_BYTE_2)
 			wait(timing[i] * timing_scale)
-			set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_OFF, MIDI_BYTE_1 + notes[i], 0)
-			message(i)
+			if i < num_elements(notes)-1 or note_down[MIDI_BYTE_1] = 0
+				set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_OFF, MIDI_BYTE_1 + notes[i], 0)
+			else //wait for key to be released (hacky I know)
+				while note_down[MIDI_BYTE_1] = 1
+					wait(2000)
+				end while
+				set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_OFF, MIDI_BYTE_1 + notes[i], 0)
+			end if
 		end for
 	end if
 	if MIDI_COMMAND = MIDI_COMMAND_NOTE_OFF
 		ignore_midi
+		note_down[MIDI_BYTE_1] := 0
 	end if
-	//message(NI_CALLBACK_ID)
 end on
 
