@@ -1,5 +1,5 @@
 { LICK by Will Bedford }
-{ Paste this into a multi script to add instant flavour to any notes you play)
+{ Paste this into a multi script to add instant flavour to any notes you play}
 { Compiled on Mon May 11 17:22:45 2020 }
 on init
 declare %djki0[8] := (0, 2, 3, 5, 0, 2, -2, 0)
