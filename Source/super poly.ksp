@@ -1,0 +1,12 @@
+macro super_poly(#name#)
+    declare _poly.#name#.array[1000]
+    property #name#
+        function get -> result
+            result := _poly.#name#.array[NI_CALLBACK_ID mod 1000]
+        end function
+    
+        function set(value)
+            _poly.#name#.array[NI_CALLBACK_ID mod 1000] := value
+        end function
+    end property
+end macro

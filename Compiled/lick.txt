@@ -1,21 +1,24 @@
-{ Compiled on Mon May 11 16:34:03 2020 }
+{ Compiled on Mon May 11 16:53:40 2020 }
 on init
 declare %djki0[8] := (0, 2, 3, 5, 0, 2, -2, 0)
 declare %3qnb2[8] := (1000, 1000, 1000, 1000, 500, 1500, 1000, 2000)
 declare $gwfzz
-declare polyphonic $hiesj
-declare polyphonic $fg4rw
+declare %r12we[1000]
 end on
 on midi_in
 if ($MIDI_COMMAND=$MIDI_COMMAND_NOTE_ON)
-$gwfzz := random(100,10000)
-$hiesj := $MIDI_BYTE_1
-$fg4rw := 0
-while ($fg4rw<=num_elements(%djki0))
-set_midi($MIDI_CHANNEL,$MIDI_COMMAND_NOTE_ON,$MIDI_BYTE_1+%djki0[$fg4rw],$MIDI_BYTE_2)
-wait(%3qnb2[$fg4rw]*$gwfzz)
-set_midi($MIDI_CHANNEL,$MIDI_COMMAND_NOTE_OFF,$MIDI_BYTE_1+%djki0[$fg4rw],0)
-inc($fg4rw)
+$gwfzz := random(20,180)
+ignore_midi
+%r12we[$NI_CALLBACK_ID mod 1000] := 0
+while (%r12we[$NI_CALLBACK_ID mod 1000]<=num_elements(%djki0))
+set_midi($MIDI_CHANNEL,$MIDI_COMMAND_NOTE_ON,$MIDI_BYTE_1+%djki0[%r12we[$NI_CALLBACK_ID mod 1000]],$MIDI_BYTE_2)
+wait(%3qnb2[%r12we[$NI_CALLBACK_ID mod 1000]]*$gwfzz)
+set_midi($MIDI_CHANNEL,$MIDI_COMMAND_NOTE_OFF,$MIDI_BYTE_1+%djki0[%r12we[$NI_CALLBACK_ID mod 1000]],0)
+message(%r12we[$NI_CALLBACK_ID mod 1000])
+inc(%r12we[$NI_CALLBACK_ID mod 1000])
 end while
+end if
+if ($MIDI_COMMAND=$MIDI_COMMAND_NOTE_OFF)
+ignore_midi
 end if
 end on

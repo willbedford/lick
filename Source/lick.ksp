@@ -1,23 +1,27 @@
-{#pragma save_compiled_source ../Compiled/lick.txt}
+import "super poly.ksp"
 
 on init 
 	declare notes[8] := (0,2,3,5,0, 2,-2,0)
 	declare timing[8] := (1000,1000,1000,1000,500, 1500,1000,2000)
 	declare timing_scale
-	declare polyphonic root_note
-	declare polyphonic i
+	super_poly(i)
 end on
 
 on midi_in
+
 	if MIDI_COMMAND = MIDI_COMMAND_NOTE_ON
-		timing_scale := random(100, 10000)
-		root_note := MIDI_BYTE_1
+		timing_scale := random(20, 180)
+		ignore_midi
 		for i := 0 to num_elements(notes)
 			set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_ON, MIDI_BYTE_1 + notes[i], MIDI_BYTE_2)
 			wait(timing[i] * timing_scale)
 			set_midi(MIDI_CHANNEL, MIDI_COMMAND_NOTE_OFF, MIDI_BYTE_1 + notes[i], 0)
+			message(i)
 		end for
 	end if
-
+	if MIDI_COMMAND = MIDI_COMMAND_NOTE_OFF
+		ignore_midi
+	end if
+	//message(NI_CALLBACK_ID)
 end on
 
