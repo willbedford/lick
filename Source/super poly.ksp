@@ -1,7 +1,7 @@
 {
-	Super Poly
+	~ Super Poly ~
 	By Will Bedford
-	Use pseudo-polyphonic variables in any callback
+	Pseudo-polyphonic variables that can be used in any callback
 }
 
 macro super_poly(#name#)
