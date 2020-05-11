@@ -1,4 +1,3 @@
-{#pragma save_compiled_source ../Compiled/lick.txt}
 import "super poly.ksp"
 on init 
 	declare notes[8] := (0,2,3,5,0, 2,-2,0)
